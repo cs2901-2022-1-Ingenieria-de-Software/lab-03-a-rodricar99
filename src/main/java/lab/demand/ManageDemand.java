@@ -14,7 +14,7 @@ public class ManageDemand {
         // Calculate Taxes
         double taxes=0.0,quantities = 0.0;
         for (Order order : orders) {
-            double tax = this.tax.calculateTax(order.getCountry());
+            double tax = this.tax.calculateTax(order.getCountry(),-1.0);
             double temp = order.getQuantity();
             taxes += tax;
             quantities += temp;
@@ -26,17 +26,12 @@ public class ManageDemand {
         // Calculate additionals by country
         double taxes = 0.0;
         for (Order order : orders) {
-            double tax = this.tax.calculateTax(order.getCountry());
-
-        }
-
-        // Calculate Total
-        double quantities = 0.0;
-        for (Order order : orders) {
+            taxes += this.tax.calculateTax(order.getCountry(),defaultAdditionalColombia);
+            taxes += this.tax.calculateTax(order.getCountry(),defaultAdditionalPeru);
+            taxes += this.tax.calculateTax(order.getCountry(),defaultAdditionalBrazil);
+            double quantities = 0.0;
             double temp = order.getQuantity();
             quantities += temp;
-        }
-
         return quantities * taxes;
     }
 
